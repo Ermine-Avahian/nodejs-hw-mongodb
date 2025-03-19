@@ -6,9 +6,20 @@ import {
   getContactById,
   updateContact,
 } from '../services/contacts.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getContactsController = async (req, res) => {
-  const contacts = await getAllContacts();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
+
   res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -32,20 +43,7 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const { name, phoneNumber, contactType, email, isFavourite } = req.body;
-  if (!name || !phoneNumber || !contactType) {
-    throw createHttpError(
-      400,
-      'Missing required fields: name, phoneNumber, or contactType',
-    );
-  }
-  const contact = await createContact({
-    name,
-    phoneNumber,
-    contactType,
-    email,
-    isFavourite,
-  });
+  const contact = await createContact(req.body);
 
   res.status(201).json({
     status: 201,
@@ -54,18 +52,18 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const deleteContactControlle = async (req, res) => {
+export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    throw createHttpError(404, 'Student not found');
+    throw createHttpError(404, 'Contact not found');
   }
 
   res.status(204).send();
 };
 
-export const patchContactControlle = async (req, res) => {
+export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
   const contact = await updateContact(contactId, req.body);
 
