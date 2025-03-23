@@ -2,16 +2,18 @@ import { SORT_ORDER } from '../constans/index.js';
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
+// Get all contacts for a user with pagination, sorting, and filtering
 export const getAllContacts = async ({
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
+  userId,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
-  const contactsQuery = ContactsCollection.find();
+  const contactsQuery = ContactsCollection.find({ userId });
 
   if (filter.type) {
     contactsQuery.where('contactType').equals(filter.type);
@@ -20,7 +22,7 @@ export const getAllContacts = async ({
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
 
-  const contactsCount = await ContactsCollection.find()
+  const contactsCount = await ContactsCollection.find({ userId })
     .merge(contactsQuery)
     .countDocuments();
 
@@ -36,24 +38,31 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (contactId) => {
-  const data = await ContactsCollection.findById(contactId);
+// Get a contact by its ID and ensure it belongs to the current user
+export const getContactById = async (contactId, userId) => {
+  const data = await ContactsCollection.findOne({ _id: contactId, userId });
   return data;
 };
 
+// Create a new contact
 export const createContact = async (payload) => {
   const data = await ContactsCollection.create(payload);
   return data;
 };
 
-export const deleteContact = async (contactId) => {
-  const data = await ContactsCollection.findOneAndDelete({ _id: contactId });
+// Delete a contact by its ID and ensure it belongs to the current user
+export const deleteContact = async (contactId, userId) => {
+  const data = await ContactsCollection.findOneAndDelete({
+    _id: contactId,
+    userId,
+  });
   return data;
 };
 
-export const updateContact = async (contactId, payload = {}) => {
+// Update a contact by its ID and ensure it belongs to the current user
+export const updateContact = async (contactId, payload = {}, userId) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, userId },
     payload,
     {
       new: true,
