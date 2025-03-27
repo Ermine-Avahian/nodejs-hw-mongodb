@@ -29,10 +29,6 @@ export const setupServer = () => {
 
   app.use('/uploads', express.static(UPLOAD_DIR));
 
-  app.get('/', (req, res) => {
-    res.json({ message: 'API is running! Use /auth or /contacts' });
-  });
-
   app.use(notFoundHandler);
 
   app.use(errorHandler);
