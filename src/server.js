@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constans/index.js';
 
 dotenv.config();
-const PORT = Number(process.env.PORT);
+const PORT = Number(process.env.PORT) || 3000;
 
 export const setupServer = () => {
   const app = express();
