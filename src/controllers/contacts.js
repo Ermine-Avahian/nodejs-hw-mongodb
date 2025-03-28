@@ -53,10 +53,17 @@ export const getContactByIdController = async (req, res) => {
 
 // Controller for creating a new contact
 export const createContactController = async (req, res) => {
+  if (!req.user || !req.user._id) {
+    throw createHttpError(401, 'Unauthorized');
+  }
+
   const contact = await createContact({ ...req.body, userId: req.user._id });
 
-  const photo = req.file;
+  if (!contact || !contact._id) {
+    throw createHttpError(400, 'Failed to create contact');
+  }
 
+  const photo = req.file;
   let photoUrl;
 
   if (photo) {
@@ -67,19 +74,17 @@ export const createContactController = async (req, res) => {
     }
   }
 
-  const result = await updateContact(contact._id, {
-    ...req.body,
-    photo: photoUrl,
-  });
-
-  if (!result) {
-    throw createHttpError(404, 'Contact not found');
+  const updateData = { ...req.body };
+  if (photoUrl) {
+    updateData.photo = photoUrl;
   }
+
+  const result = await updateContact(contact._id, updateData, req.user._id);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
-    data: contact,
+    data: result,
   });
 };
 

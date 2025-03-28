@@ -60,6 +60,7 @@ export const deleteContact = async (contactId, userId) => {
 };
 
 // Update a contact by its ID and ensure it belongs to the current user
+
 export const updateContact = async (contactId, payload = {}, userId) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: contactId, userId },
@@ -70,7 +71,9 @@ export const updateContact = async (contactId, payload = {}, userId) => {
     },
   );
 
-  if (!rawResult || !rawResult.value) return null;
+  if (!rawResult || !rawResult.value) {
+    return null;
+  }
 
   return rawResult.value;
 };
