@@ -7,4 +7,4 @@ responses:
   '204':
     description: User successfully logged out.
   '401':
-    description: Unauthorized – Invalid or missing token.
+    $ref: '../../components/responses/401.yaml'

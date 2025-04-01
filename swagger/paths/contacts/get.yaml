@@ -3,8 +3,6 @@ tags:
 summary: Get a list of contacts
 operationId: getContacts
 description: Get list of contacts with this endpoint
-security:
-  - bearerAuth: []
 parameters:
   - in: query
     name: name
@@ -34,7 +32,7 @@ parameters:
       example: true
 responses:
   '200':
-    description: Successfully found students!
+    description: Successfully found contacts!
     content:
       application/json:
         schema:
@@ -49,7 +47,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found students!
+              example: Successfully found contacts!
             data:
               type: object
               required:
@@ -83,3 +81,5 @@ responses:
                 hasPreviousPage:
                   type: boolean
                   example: false
+  '401':
+    $ref: '../../components/responses/401.yaml'

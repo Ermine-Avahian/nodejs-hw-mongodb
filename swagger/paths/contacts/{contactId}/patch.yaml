@@ -3,8 +3,6 @@ tags:
 summary: Update a contact
 operationId: updateContact
 description: Update an existing contact by ID.
-security:
-  - bearerAuth: []
 parameters:
   - in: path
     name: contactId

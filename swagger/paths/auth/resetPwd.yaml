@@ -39,5 +39,7 @@ responses:
             message:
               type: string
               example: Password has been successfully reset.
+            data:
+              type: object
   '401':
     $ref: '../../components/responses/401.yaml'

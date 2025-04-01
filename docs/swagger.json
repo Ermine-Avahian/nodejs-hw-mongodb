@@ -535,7 +535,24 @@
             }
           },
           "409": {
-            "description": "Email already in use"
+            "description": "Email already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email already in use."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -630,7 +647,7 @@
             "description": "User successfully logged out."
           },
           "401": {
-            "description": "Unauthorized – Invalid or missing token."
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -987,7 +1004,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "UnauthorizedError"
+                  "example": "Unauthorized"
                 }
               }
             }

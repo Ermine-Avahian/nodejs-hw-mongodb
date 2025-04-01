@@ -9,4 +9,6 @@ content:
           example: 404
         message:
           type: string
-          example: Contact not found.
+          example: 'Contact not found.'
+        data:
+          type: object
