@@ -1,0 +1,38 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: Creates a new user account
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../components/schemas/auth.yaml'
+responses:
+  '201':
+    description: Successfully registered a user!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              allOf:
+                - $ref: ../../components/schemas/auth.yaml
+                - type: object
+                  properties:
+                    password: {}
+  '409':
+    description: Email already in use

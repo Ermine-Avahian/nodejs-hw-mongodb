@@ -3,8 +3,6 @@ tags:
 summary: Create contact
 operationId: createContact
 description: 'Create a contact with payload'
-security:
-  - bearerAuth: []
 requestBody:
   content:
     multipart/form-data:

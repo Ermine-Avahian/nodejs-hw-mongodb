@@ -1,0 +1,28 @@
+type: object
+required:
+  - name
+  - email
+  - password
+properties:
+  name:
+    type: string
+    description: "Contact's name"
+    example: 'John Doe'
+  email:
+    type: string
+    description: 'Email address'
+    example: 'johndoe@example.com'
+  password:
+    type: string
+    description: "User's password for authentication"
+    example: 'SecureP@ssw0rd'
+  createdAt:
+    type: string
+    format: date-time
+    description: 'Timestamp of when the contact was created'
+    example: '2024-03-31T12:00:00Z'
+  updatedAt:
+    type: string
+    format: date-time
+    description: 'Timestamp of when the contact was last updated'
+    example: '2024-03-31T12:30:00Z'

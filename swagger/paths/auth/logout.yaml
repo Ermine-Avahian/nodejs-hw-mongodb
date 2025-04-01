@@ -1,0 +1,10 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: Logs out the authenticated user by invalidating the token.
+responses:
+  '204':
+    description: User successfully logged out.
+  '401':
+    description: Unauthorized – Invalid or missing token.

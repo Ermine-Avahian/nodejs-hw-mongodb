@@ -18,6 +18,11 @@ servers:
   - url: https://contacts-app-v0rd.onrender.com
 
 paths:
+  /contacts:
+    get:
+      $ref: '../swagger/paths/contacts/get.yaml'
+    post:
+      $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{contactId}:
     get:
       $ref: '../swagger/paths/contacts/{contactId}/get.yaml'
@@ -25,14 +30,31 @@ paths:
       $ref: '../swagger/paths/contacts/{contactId}/delete.yaml'
     patch:
       $ref: '../swagger/paths/contacts/{contactId}/patch.yaml'
-  /contacts:
-    get:
-      $ref: '../swagger/paths/contacts/get.yaml'
+
+  /auth/register:
     post:
-      $ref: '../swagger/paths/contacts/post.yaml'
+      $ref: '../swagger/paths/auth/register.yaml'
+  /auth/login:
+    post:
+      $ref: '../swagger/paths/auth/login.yaml'
+  /auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/logout.yaml'
+  /auth/refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh.yaml'
+  /auth/send-reset-email:
+    post:
+      $ref: '../swagger/paths/auth/send-reset-email.yaml'
+  /auth/reset-pwd:
+    post:
+      $ref: '../swagger/paths/auth/resetPwd.yaml'
 
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+
+security:
+  - bearerAuth: []
