@@ -12,7 +12,7 @@ parameters:
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
         properties:
@@ -36,14 +36,10 @@ requestBody:
             type: string
             description: 'Contact type'
             enum: ['work', 'home', 'personal']
-          userId:
-            type: string
-            description: 'User ID reference'
-            example: '60d0fe4f5311236168a109ca'
           photo:
             type: string
-            description: "URL to the contact's photo"
-            example: 'https://res.cloudinary.com/dw3qjido8/image/upload/v1743113771/zo6dstqb…'
+            format: binary
+            description: "File upload for the contact's photo"
 responses:
   '200':
     description: Contact updated successfully

@@ -2,12 +2,12 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "<назва вашого додатку>",
+    "title": "Contacts App",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "<опис вашого додатку>"
+    "description": "API for managing contacts, including authentication, adding, editing, and deleting contacts."
   },
   "servers": [
     {
@@ -41,11 +41,6 @@
         "summary": "Get a list of contacts",
         "operationId": "getContacts",
         "description": "Get list of contacts with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "query",
@@ -95,7 +90,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully found students!",
+            "description": "Successfully found contacts!",
             "content": {
               "application/json": {
                 "schema": {
@@ -112,7 +107,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found students!"
+                      "example": "Successfully found contacts!"
                     },
                     "data": {
                       "type": "object",
@@ -162,6 +157,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       },
@@ -213,27 +211,10 @@
                       "personal"
                     ]
                   },
-                  "userId": {
-                    "description": "User ID reference",
-                    "type": "string",
-                    "example": "60d0fe4f5311236168a109ca"
-                  },
                   "photo": {
                     "type": "string",
-                    "description": "URL to the contact's photo",
-                    "example": "https://res.cloudinary.com/dw3qjido8/image/upload/v1743113771/zo6dstqb…"
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Timestamp of when the contact was created",
-                    "example": "2024-03-31T12:00:00Z"
-                  },
-                  "updatedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Timestamp of when the contact was last updated",
-                    "example": "2024-03-31T12:30:00Z"
+                    "format": "binary",
+                    "description": "File upload for the contact's photo"
                   }
                 }
               }
@@ -283,11 +264,6 @@
         "summary": "Get contact by id",
         "operationId": "getContactById",
         "description": "Get contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -339,11 +315,6 @@
         "summary": "Delete a contact",
         "operationId": "deleteContact",
         "description": "Delete an existing contact by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -371,11 +342,6 @@
         "summary": "Update a contact",
         "operationId": "updateContact",
         "description": "Update an existing contact by ID.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -389,7 +355,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -422,15 +388,10 @@
                       "personal"
                     ]
                   },
-                  "userId": {
-                    "type": "string",
-                    "description": "User ID reference",
-                    "example": "60d0fe4f5311236168a109ca"
-                  },
                   "photo": {
                     "type": "string",
-                    "description": "URL to the contact's photo",
-                    "example": "https://res.cloudinary.com/dw3qjido8/image/upload/v1743113771/zo6dstqb…"
+                    "format": "binary",
+                    "description": "File upload for the contact's photo"
                   }
                 }
               }
@@ -548,6 +509,9 @@
                     "message": {
                       "type": "string",
                       "example": "Email already in use."
+                    },
+                    "data": {
+                      "type": "object"
                     }
                   }
                 }
@@ -840,6 +804,9 @@
                     "message": {
                       "type": "string",
                       "example": "Password has been successfully reset."
+                    },
+                    "data": {
+                      "type": "object"
                     }
                   }
                 }
@@ -981,6 +948,9 @@
                 "message": {
                   "type": "string",
                   "example": "Failed to create contact."
+                },
+                "data": {
+                  "type": "object"
                 }
               }
             }
@@ -1005,6 +975,9 @@
                 "message": {
                   "type": "string",
                   "example": "Unauthorized"
+                },
+                "ata": {
+                  "type": "object"
                 }
               }
             }
@@ -1025,6 +998,9 @@
                 "message": {
                   "type": "string",
                   "example": "Contact not found."
+                },
+                "data": {
+                  "type": "object"
                 }
               }
             }
